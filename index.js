@@ -1,7 +1,6 @@
 const cors = require('cors')
 const express = require('express');
 const app = express();
-const port = 3000;
 const fs   = require('fs');
 const path = require('path');
 const router = express.Router();
@@ -10,12 +9,13 @@ app.use('/', router);
 app.use(express.urlencoded({extended: true} ));
 app.use(express.static(__dirname));
 require('dotenv').config()
+const PORT = 3001;
 
 module.exports = app
 
 // käyttää routeria kertoakseen mistä html-sivu löytyy 
-router.get('/', (request,response) => {
-  response.sendFile(path.join(__dirname+'/todo.html'));
+router.get('/todo', (request,response) => {
+  response.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 // cors - salli liikenne kaikista porteista ja domaneista
@@ -87,9 +87,9 @@ app.get('/todos', (request, response) => {
   response.send('Todos')
 })
 
-// app listen port 3000
-app.listen(port, () => {
-  console.log('Example app listening on port 3000')
+// app listen port 3001
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })
 
 // Muokakkaa tehtävää
