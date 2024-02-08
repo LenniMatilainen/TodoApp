@@ -10,7 +10,7 @@ function init() {
 
 // Jos parametriksi on annettu false, lataa se tekemättömät tehtävät. Muuten se lataa tehdyt tehtävät.
 async function loadTodos(isCompleted) {
-    let response = await fetch('/todos')
+    let response = await fetch('/todo/todos')
     let tasks = await response.json()
     let todos;
     isCompleted ? todos = tasks.filter(item => item.completed) : todos = tasks.filter(item => !item.completed)
@@ -60,7 +60,7 @@ async function addTodo() {
   let newTodo = document.getElementById('newTodo')
   // ... ja lisää sen tietokantaan POST -metodilla. Tämän jälkeen on aika luoda siitä HTML -elementti.
   const data = { 'text': newTodo.value }
-  const response = await fetch('/todos', {
+  const response = await fetch('/todo/todos', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json'
@@ -179,7 +179,7 @@ function createTodoWrapper(todo, taskText, x, checkbox) {
 // Poistaa tehtävän DELETE -metodilla.
 async function removeTodo(id, isCompleted, completionStatusChanged) {
   if (!completionStatusChanged) {
-    await fetch('/todos/' + id, {
+    await fetch('/todo/todos/' + id, {
       method: 'DELETE'
     })
   }
@@ -202,7 +202,7 @@ async function saveTodo(element) {
   let identif = element.parentNode.id
   const data = { 'text': element.value }
   // Etsii tehtävän tietokantaan tallennetun id:n tehtävän ja päivittää sen PUT -metodilla
-  const response = await fetch('/todos/' + identif, {
+  const response = await fetch('/todo/todos/' + identif, {
       method: 'PUT',
       headers: {
           'Content-Type': 'application/json'
@@ -258,7 +258,7 @@ async function markCompleted(taskID, inputID, isCompleted) {
   let data = !isCompleted ? { 'text': task.value } : { 'text': task.innerHTML }
 
   // Objektin completed -arvo kääntyy index.js -tiedostossa.
-  response = await fetch(`/completed/${taskID}`, {
+  response = await fetch(`/todo/completed/${taskID}`, {
     method: 'PUT',
     headers: {
     'Content-Type': 'application/json'
