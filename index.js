@@ -60,9 +60,9 @@ app.get('/todo/todos', async (request, response) => {
 // Poistaa tietyn tehtävän
 app.delete('/todo/todos/:id', async (request, response) => {
   const todoExists = doesTodoExist(request.params.id);
-  const deletedTodo = request.body.id;
   if (todoExists) {
-    await Todo.findByIdAndRemove(deletedTodo);
+    await Todo.findByIdAndRemove(request.params.id);
+    console.log("DELETED!")
     response.status(200).json({message: 'Todo removed successfully'});
   } else {
     response.status(404).json({error: 'Todo not found'});
@@ -90,7 +90,6 @@ app.put('/todo/completed/:id', async (request, response) => {
   const updatedTodoText = request.body.text;
   const updatedTodoCompletionStatus = !request.body.completed;
   const todoExists = await doesTodoExist(todoId);
-
   if (todoExists) {
     await Todo.findByIdAndUpdate(todoId, {text: updatedTodoText, completed: updatedTodoCompletionStatus});
     response.status(200).json({message: 'Todo updated successfully'});

@@ -254,8 +254,8 @@ document.addEventListener("keyup", function(event){
 // Merkkaa valitun tehtävän suoritetuksi tai ei suoritetuksi.
 async function markCompleted(taskID, inputID, isCompleted) {
   const task = document.getElementById(inputID);
-
-  let data = !isCompleted ? { 'text': task.value } : { 'text': task.innerHTML }
+  console.log(isCompleted)
+  let data = isCompleted ? { 'text': task.innerHTML, 'completed': isCompleted } : { 'text': task.value, 'completed': isCompleted }
 
   // Objektin completed -arvo kääntyy index.js -tiedostossa.
   response = await fetch(`/todo/completed/${taskID}`, {
