@@ -135,7 +135,7 @@ span {
 }
 
 ::placeholder {
-  color: rgba(245, 245, 245, 0.643)
+  color: #f2f9f2;
 }
 
 ::-webkit-scrollbar {
